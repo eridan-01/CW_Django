@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "cw-django"
+version = "0.1.0"
+description = ""
+authors = ["Eugene Geym <geymzheka@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.7"
+psycopg2-binary = "^2.9.9"
+pillow = "^10.4.0"
+black = "^24.4.2"
+ipython = "^8.26.0"
+pytils = "^0.4.1"
+django-crispy-forms = "^2.3"
+crispy-bootstrap5 = "^2024.2"
+certifi = "^2024.7.4"
+python-dotenv = "^1.0.1"
+redis = "^5.0.7"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
