@@ -4,9 +4,9 @@
             <div class="col-sm offset-md-1 py-4">
                 <h4>Меню</h4>
                 <nav class="list-unstyled">
-                    <a class="p-2 btn btn-outline-light" href=#>Клиенты</a>
-                    <a class="p-2 btn btn-outline-light" href=#>Сообщение</a>
-                    <a class="p-2 btn btn-outline-light" href=#>Рассылка</a>
+                    <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:client-list' %}">Клиенты</a>
+                    <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:message-list' %}">Сообщение</a>
+                    <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:mailing-list' %}">Рассылка</a>
                     <a class="p-2 btn btn-outline-light" href=#>Контакты</a>
                     <a class="p-2 btn btn-outline-light" href=#>Блог</a>
                     {% if user.is_authenticated %}

@@ -1,0 +1,30 @@
+{% extends 'newsletter/home.html' %}
+
+{% block content %}
+<h1>Рассылка</h1>
+<a href="{% url 'newsletter:mailing-create' %}" class="btn btn-success mb-2 mt-2">Добавить запись</a>
+<style>
+    .btn-full-width {
+        width: 100%;
+        display: block;
+    }
+</style>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+            {% for mailing in object_list %}
+            <div class="col mb-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ mailing }}</h5>
+                        <a href="{% url 'newsletter:mailing-detail' mailing.id %}" class="btn btn-primary btn-full-width mb-2">Подробнее</a>
+                        <a href="{% url 'newsletter:mailing-update' mailing.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
+                        <a href="{% url 'newsletter:mailing-delete' mailing.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
