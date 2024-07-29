@@ -19,6 +19,7 @@ certifi = "^2024.7.4"
 python-dotenv = "^1.0.1"
 redis = "^5.0.7"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.0.0"}
+django-crontab = "^0.7.1"
 
 
 [build-system]
