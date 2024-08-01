@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -36,6 +38,12 @@ class Client(models.Model):
         **NULLABLE
     )
 
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец"
+    )
+
     def __str__(self):
         return f"{self.last_name} {self.first_name}"
 
@@ -50,9 +58,16 @@ class Message(models.Model):
         verbose_name="Тема сообщения",
         help_text="Введите тему сообщения"
     )
+
     body = models.TextField(
         verbose_name="Содержание сообщения",
         help_text="Введите содержание сообщения"
+    )
+
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец"
     )
 
     def __str__(self):
@@ -112,6 +127,12 @@ class Mailing(models.Model):
 
     clients = models.ManyToManyField(
         Client
+    )
+
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец"
     )
 
     def __str__(self):
