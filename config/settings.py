@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+
+from django.contrib import messages
 from dotenv import load_dotenv
 
 env_path = Path(__file__).resolve().parent.parent / '.env'
@@ -108,3 +110,17 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', False) == 'True'
 EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False) == 'True'
+
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
