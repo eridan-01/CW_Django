@@ -18,8 +18,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ mailing }}</h5>
                         <a href="{% url 'newsletter:mailing-detail' mailing.id %}" class="btn btn-primary btn-full-width mb-2">Подробнее</a>
-                        <a href="{% url 'newsletter:mailing-update' mailing.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
-                        <a href="{% url 'newsletter:mailing-delete' mailing.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                        {% if user.is_authenticated %}
+                            {% if perms.newsletter.can_view_mailing and perms.newsletter.can_disable_mailing or user == newsletter.owner %}
+                            <a href="{% url 'newsletter:mailing-update' mailing.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
+                            <a href="{% url 'newsletter:mailing-delete' mailing.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

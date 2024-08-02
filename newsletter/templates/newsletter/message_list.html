@@ -18,8 +18,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ message }}</h5>
                         <a href="{% url 'newsletter:message-detail' message.id %}" class="btn btn-primary btn-full-width mb-2">Подробнее</a>
-                        <a href="{% url 'newsletter:message-update' message.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
-                        <a href="{% url 'newsletter:message-delete' message.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                        {% if user.is_authenticated %}
+                            {% if user == newsletter.owner %}
+                            <a href="{% url 'newsletter:message-update' message.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
+                            <a href="{% url 'newsletter:message-delete' message.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             </div>

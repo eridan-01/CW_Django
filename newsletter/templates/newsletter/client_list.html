@@ -21,8 +21,10 @@
                         <h5 class="card-title">{{ client }}</h5>
                         <a href="{% url 'newsletter:client-detail' client.id %}" class="btn btn-primary btn-full-width mb-2">Подробнее</a>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'newsletter:client-update' client.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
-                        <a href="{% url 'newsletter:client-delete' client.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                            {% if user == newsletter.owner %}
+                            <a href="{% url 'newsletter:client-update' client.id %}" class="btn btn-primary btn-full-width mb-2">Редактировать</a>
+                            <a href="{% url 'newsletter:client-delete' client.id %}" class="btn btn-danger btn-full-width mb-2">Удалить</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
