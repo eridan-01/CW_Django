@@ -2,23 +2,41 @@ import secrets
 import string
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 
 from config.settings import EMAIL_HOST_USER
 
 
+class UserListView(ListView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy('users:user_list')
+    context_object_name = 'users'  # Имя, под которым список пользователей будет доступен в шаблоне
+    extra_context = {'title': 'Пользователи'}
+
+    def get_queryset(self):
+        # Здесь можно настроить фильтрацию или сортировку, если нужно
+        return User.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Вы можете добавить дополнительные данные в контекст, если нужно
+        return context
+
+
 class UserCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
-    success_url = reverse_lazy('users:login')
+    success_url = reverse_lazy('users:user_list')
 
     def form_valid(self, form):
         user = form.save()
@@ -73,3 +91,12 @@ class PasswordResetView(View):
         else:
             messages.error(request, 'Нет пользователя с таким email.')
             return redirect('users:password_reset')
+
+
+@login_required
+@permission_required('auth.block_user')
+def block_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.is_active = False
+    user.save()
+    return redirect('user_list')

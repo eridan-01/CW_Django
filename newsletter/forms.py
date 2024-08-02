@@ -16,7 +16,13 @@ class StyledFormMixin:
 class ClientForm(StyledFormMixin, ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ('last_name ', 'comment', 'owner')
+
+
+class ClientModeratorForm(StyledFormMixin, ModelForm):
+    class Meta:
+        model = Client
+        exclude = ('last_name ', 'comment', 'owner')
 
 
 class MessageForm(StyledFormMixin, ModelForm):
@@ -25,7 +31,19 @@ class MessageForm(StyledFormMixin, ModelForm):
         fields = '__all__'
 
 
+class MessageModeratorForm(StyledFormMixin, ModelForm):
+    class Meta:
+        model = Message
+        fields = '__all__'
+
+
 class MailingForm(StyledFormMixin, ModelForm):
+    class Meta:
+        model = Mailing
+        fields = '__all__'
+
+
+class MailingModeratorForm(StyledFormMixin, ModelForm):
     class Meta:
         model = Mailing
         fields = '__all__'

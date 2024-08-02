@@ -141,6 +141,13 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылки"
+        permissions = [
+            ('can_view_mailing', 'Может просматривать рассылки'),
+            ('can_disable_mailing', 'Может отключать рассылки'),
+            ('cannot_edit_mailing', 'Не может редактировать рассылки'),
+            ('cannot_manage_mailing', 'Не может управлять списком рассылок'),
+            ('cannot_change_mailing', 'Не может создавать рассылки'),
+        ]
 
 
 class Attempt(models.Model):
