@@ -8,6 +8,23 @@ from .models import Client, Message, Mailing
 from .forms import ClientForm, MessageForm, MailingForm, MailingModeratorForm, MessageModeratorForm
 
 
+from django.views.generic import TemplateView
+from .models import Mailing, Client
+from blog.models import Blog
+
+
+class HomeView(TemplateView):
+    template_name = 'newsletter/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_mailings'] = Mailing.objects.count()
+        context['active_mailings'] = Mailing.objects.filter(status=Mailing.STARTED).count()
+        context['unique_clients'] = Client.objects.distinct().count()
+        context['random_articles'] = Blog.objects.order_by('?')[:3]
+        return context
+
+
 class ClientListView(ListView):
     model = Client
 
