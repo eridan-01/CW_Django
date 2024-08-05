@@ -50,6 +50,9 @@ class Client(models.Model):
     class Meta:
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
+        permissions = [
+            ('can_view_client', 'Может просматривать клиентов сервиса'),
+        ]
 
 
 class Message(models.Model):
@@ -76,6 +79,9 @@ class Message(models.Model):
     class Meta:
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
+        permissions = [
+            ('cannot_change_message', 'Не может изменять сообщения'),
+        ]
 
 
 class Mailing(models.Model):
