@@ -1,8 +1,13 @@
-from django.views.generic import DetailView
-from .models import Blog
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView
+
+from blog.models import Blog
 
 
-class ArticleDetailView(DetailView):
+class BlogListView(ListView):
     model = Blog
-    template_name = 'article_detail.html'
-    context_object_name = 'article'
+    extra_context = {'title': 'Блог'}
+
+
+class BlogDetailView(LoginRequiredMixin, DetailView):
+    model = Blog
