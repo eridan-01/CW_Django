@@ -44,10 +44,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        client = form.save()
-        user = self.request.user
-        client.owner = user
-        client.save()
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
     def get_queryset(self):
@@ -87,10 +84,7 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        message = form.save()
-        user = self.request.user
-        message.owner = user
-        message.save()
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
 
@@ -135,10 +129,7 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        client = form.save()
-        user = self.request.user
-        client.owner = user
-        client.save()
+        form.instance.owner = self.request.user
         return super().form_valid(form)
 
     def get_queryset(self):
