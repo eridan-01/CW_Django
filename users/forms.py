@@ -1,12 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
-
 from newsletter.forms import StyledFormMixin
-from users.models import User
 
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms import BooleanField
+from django.forms import BooleanField, ModelForm
 
 from users.models import User
 
@@ -35,3 +32,10 @@ class UserProfileForm(StyleFormMixin, UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['password'].widget = forms.HiddenInput()
+
+
+class UserModeratorForm(StyledFormMixin, ModelForm):
+    class Meta:
+        model = User
+        fields = ('email', 'phone_number', 'avatar', 'country')
+

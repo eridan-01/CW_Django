@@ -20,6 +20,7 @@
                 <th>Действия</th>
             </tr>
         </thead>
+        {% if perms.users.can_view_users%}
         <tbody>
             {% for user in users %}
             <tr>
@@ -33,10 +34,12 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if user.is_active %}
-                        <a href="#" onclick="return confirm('Вы уверены, что хотите заблокировать этого пользователя?');">Блокировать</a>
-                    {% else %}
-                        <span>Заблокирован</span>
+                    {% if perms.users.block_user%}
+                        {% if user.is_active %}
+                            <a href="#" onclick="return confirm('Вы уверены, что хотите заблокировать этого пользователя?');">Блокировать</a>
+                        {% else %}
+                            <span>Заблокирован</span>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
@@ -46,6 +49,7 @@
             </tr>
             {% endfor %}
         </tbody>
+        {% endif %}
     </table>
 
     <a href="{% url 'newsletter:client-list' %}">На главную</a>

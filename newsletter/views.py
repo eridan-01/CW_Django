@@ -97,7 +97,7 @@ class MessageUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner:
             return MessageForm
-        if user.groups.filter(name='Manager').exists():
+        if user.groups.filter(name='managers').exists():
             return MessageModeratorForm
         raise PermissionDenied
 
@@ -145,7 +145,7 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner:
             return MailingForm
-        if user.groups.filter(name='Manager').exists():
+        if user.groups.filter(name='managers').exists():
             return MailingModeratorForm
         raise PermissionDenied
 

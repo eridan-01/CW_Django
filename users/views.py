@@ -5,13 +5,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
-from users.forms import UserRegisterForm, UserProfileForm
+from users.forms import UserRegisterForm, UserProfileForm, UserModeratorForm
 from users.models import User
 
 from config.settings import EMAIL_HOST_USER
@@ -112,3 +113,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:user-list')
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_staff or user.groups.filter(name='managers').exists():
+            return UserModeratorForm
+        raise PermissionDenied
+
