@@ -24,7 +24,7 @@
             {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
+                <td><a href="{% url 'users:user-detail' user.pk %}">{{ user.email }}</a></td>
                 <td>
                     {% if user.is_active %}
                         Активен

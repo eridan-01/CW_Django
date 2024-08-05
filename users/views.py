@@ -4,11 +4,12 @@ import string
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views import View
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
@@ -19,7 +20,7 @@ from config.settings import EMAIL_HOST_USER
 class UserListView(ListView):
     model = User
     form_class = UserProfileForm
-    success_url = reverse_lazy('users:user_list')
+    success_url = reverse_lazy('users:user-list')
     context_object_name = 'users'  # Имя, под которым список пользователей будет доступен в шаблоне
     extra_context = {'title': 'Пользователи'}
 
@@ -36,7 +37,7 @@ class UserListView(ListView):
 class UserCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
-    success_url = reverse_lazy('users:user_list')
+    success_url = reverse_lazy('users:user-list')
 
     def form_valid(self, form):
         user = form.save()
@@ -100,3 +101,14 @@ def block_user(request, user_id):
     user.is_active = False
     user.save()
     return redirect('user_list')
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    success_url = reverse_lazy('users:user-detail')
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserProfileForm
+    success_url = reverse_lazy('users:user-list')
