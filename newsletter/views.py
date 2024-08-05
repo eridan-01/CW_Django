@@ -110,8 +110,17 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 class MailingListView(LoginRequiredMixin, ListView):
     model = Mailing
 
-    def get_queryset(self):
-        return Mailing.objects.filter(owner=self.request.user)
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return MailingForm
+        if user.has_perm(
+            "newsletter.can_view_mailing"
+        ) and user.has_perm(
+            "newsletter.can_disable_mailing"
+        ):
+            return MailingModeratorForm
+        raise PermissionDenied
 
 
 class MailingDetailView(LoginRequiredMixin, DetailView):
@@ -141,13 +150,9 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
     form_class = MailingForm
     success_url = reverse_lazy('newsletter:mailing-list')
 
-    def get_form_class(self):
-        user = self.request.user
-        if user == self.object.owner:
-            return MailingForm
-        if user.groups.filter(name='managers').exists():
-            return MailingModeratorForm
-        raise PermissionDenied
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
 
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
