@@ -9,16 +9,13 @@
                     <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:client-list' %}">Клиенты</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:message-list' %}">Сообщение</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:mailing-list' %}">Рассылка</a>
+                    <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:attempt-list' %}">Попытки рассылок</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'users:user-list' %}">Пользователи</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'blog:blog-list' %}">Блог</a>
                     <a class="p-2 btn btn-outline-light" href=#>Профиль</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'users:logout' %}">Выйти</a>
                     {% else %}
-                    <a class="p-2 btn btn-outline-light" href="{% url 'newsletter:client-list' %}">Клиенты</a>
-                    <a class="p-2 btn btn-outline-light" href="{% url 'users:register' %}">Сообщение</a>
-                    <a class="p-2 btn btn-outline-light" href="{% url 'users:register' %}">Рассылка</a>
-                    <a class="p-2 btn btn-outline-light" href="#">Пользователи</a>
-                    <a class="p-2 btn btn-outline-light" href="{% url 'users:register' %}">Блог</a>
+                    <a class="p-2 btn btn-outline-light" href="{% url 'blog:blog-list' %}">Блог</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'users:login' %}">Войти</a>
                     <a class="p-2 btn btn-outline-light" href="{% url 'users:register' %}">Регистрация</a>
                     {% endif %}

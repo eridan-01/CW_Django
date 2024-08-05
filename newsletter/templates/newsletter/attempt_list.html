@@ -1,0 +1,27 @@
+{% extends 'newsletter/constructor.html' %}
+
+{% block content %}
+<h1>Попытки рассылок</h1>
+<style>
+    .btn-full-width {
+        width: 100%;
+        display: block;
+    }
+</style>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2">
+            {% for attempt in object_list %}
+            <div class="col mb-2">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ attempt }}</h5>
+                        <a href="{% url 'newsletter:client-detail' client.id %}" class="btn btn-primary btn-full-width mb-2">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

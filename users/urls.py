@@ -16,5 +16,4 @@ urlpatterns = [
     path('register/', UserCreateView.as_view(), name='register'),
     path('email-confirm/<str:token>/', email_verification, name='email-confirm'),
     path('password-reset/', PasswordResetView.as_view(), name='password-reset'),
-
 ]

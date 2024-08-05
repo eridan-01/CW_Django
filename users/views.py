@@ -17,7 +17,7 @@ from users.models import User
 from config.settings import EMAIL_HOST_USER
 
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:user-list')
@@ -34,7 +34,7 @@ class UserListView(ListView):
         return context
 
 
-class UserCreateView(CreateView):
+class UserCreateView(LoginRequiredMixin, CreateView):
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy('users:user-list')

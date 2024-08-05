@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Client, Message, Mailing
+from .models import Client, Message, Mailing, Attempt
 from .forms import ClientForm, MessageForm, MailingForm, MailingModeratorForm, MessageModeratorForm
 
 
@@ -25,7 +25,7 @@ class HomeView(TemplateView):
         return context
 
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin, ListView):
     model = Client
 
 
@@ -162,3 +162,8 @@ class MailingUpdateView(LoginRequiredMixin, UpdateView):
 class MailingDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailing
     success_url = reverse_lazy('newsletter:mailing-list')
+
+
+class AttemptListView(LoginRequiredMixin, ListView):
+    model = Attempt
+    fields = ['status']
